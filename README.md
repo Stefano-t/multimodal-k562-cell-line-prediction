@@ -17,7 +17,7 @@ Predict active regulatory regions in specific cell lines.
 
 ## Dataset
 
-**HG38**: https:://github.com/AnacletoLAB/epigenomic_dataset
+**HG38**: https://github.com/AnacletoLAB/epigenomic_dataset
 
 ## NN models
 
