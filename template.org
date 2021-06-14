@@ -1,0 +1,33 @@
+#+TITLE: Report of bioninformatic project
+#+AUTHOR: Stefano Taverni @@latex:\\@@ stefano.taverni@studenti.unimi.it
+#+DATE: \today
+
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper, twocolumn, 12pt]
+#+LATEX_HEADER:
+#+OPTIONS: toc:nil
+
+* Introduction
+
+* Models
+  
+* Experimental setup
+
+* Considered task
+  
+* Dataset source
+  
+* Preprocessing
+
+* Data correlation and distribution
+
+* Feature selection
+
+* Data visualization
+
+* Holdouts
+
+* Result analysis
+
+* Results
+
