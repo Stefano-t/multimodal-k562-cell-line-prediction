@@ -1,0 +1,39 @@
+* Enhancher
+  La dimensione varia tra le 50 e 1500 coppie di basi.
+
+  Lo spazio di ricerca è estremamente grande, nell'ordine dei miliardi di basi
+  di DNA. Inoltre, la posizione non è fissa rispetto al gene target, e posso
+  anche saltare il gene più vicino oppure anche codificare per più geni.
+
+  Vengono seguenziati tramite il metodo *ChiP-seq*, indipendente dalla
+  conservazione del DNA.
+
+* Promoter
+  Dimensione di circa 100-1000 coppie di basi.
+
+  Sono posizionati vicino al sito di trascrizione. Possono codificare una
+  proteina oppure avere una funzione indipendete, come tRNA, mRNA, rRNA.
+
+* CNN
+  Lavorano bene con dati di dimensione fissa.
+
+  Alcuni iperparametri importanti sono:
+  + depth   :: numeri di neuroni di un layer che si connettono nella stessa
+               regione del layer precedente.
+  + stride  :: numero di unità con cui far muovere la convoluzione
+  + padding :: come riempire i bordi della regione di input in caso di stride
+               troppo grande.
+
+* Cell line K562
+  Linea cellulare di leucemia mieloide, ottenuta da una donna di 53 anni con
+  leucemia mieloide cronica in crisi blastica.
+
+* bigWig
+  Variante più efficiente di *wiggle* per rappresentare dati densi e continui
+  per poi essere raffigurati tramite grafo.
+
+* BED format
+  Metodo di definizioni delle data lines. Hanno tre campi obbligatori:
+  + chrom :: nome del cromosoma.
+  + chromStart :: posizione iniziale del cromosoma.
+  + chromEnd :: posizione finale del cromosoma (esclusa).
