@@ -37,3 +37,25 @@
   + chrom :: nome del cromosoma.
   + chromStart :: posizione iniziale del cromosoma.
   + chromEnd :: posizione finale del cromosoma (esclusa).
+* AUPRC
+   *Area under the precision-recall curve* is a measure to evaluate
+   the performance of a model in case of highly imbalanced data. It is
+   the area under the *precision-recall* curve. The baseline value if
+   the AUPRC is the fraction of positives examples divided by the
+   total number of examples. A model achieves perfect AUPRC when it
+   finds all the positive examples (perfect recall) without
+   accidentally marking any negative examples as positive (perfect
+   precision).
+* AUROC
+  *area under the receiver operating characteristic*: is thus a
+   performance metric for “discrimination”: it tells you about the
+   model’s ability to discriminate between cases (positive examples)
+   and non-cases (negative examples.) An AUROC of 0.8 means that the
+   model has good discriminatory ability: 80% of the time, the model
+   will correctly assign a higher absolute risk to a randomly selected
+   patient with an event than to a randomly selected patient without
+   an event. An AUROC of 0.5 is a useless model, because a random
+   classifier performs in the same way. The AUROC can be “excessively
+   optimistic” about the performance of models that are built for data
+   sets with a much larger number of negative examples than positive
+   examples.

@@ -1,2 +1,6 @@
 .ipynb_checkpoints/
 datasets/
+genomes/
+model_histories/
+model_performance/
+decomposition/
