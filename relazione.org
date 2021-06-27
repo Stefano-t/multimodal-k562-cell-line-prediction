@@ -1,0 +1,60 @@
+#+TITLE: Report of bioninformatic project
+#+AUTHOR: Stefano Taverni @@latex:\\@@ stefano.taverni@studenti.unimi.it
+#+DATE: \today
+
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper, twocolumn, 12pt]
+#+LATEX_HEADER:
+#+OPTIONS: toc:nil
+
+#+begin_abstract
+The objective of the project is the prediction of active regulatory
+regions in cell line K562 through the development of different kind of
+deep neural networks. The main focus of the project is not the
+overtaking of state-of-the-art network models, but how to correctly
+constraction of such models, the setup of the experimental environment
+and how to obtain statistically significant and reliable results.
+#+end_abstract
+
+* Introduction
+  In the human genome, 98% of DNA sequences are non-protein-coding
+  regions, DNA that does not encode protein sequences. A subset of
+  these non-coding regions are the cis-regulatory elements (CREs)
+  which regulate the trascription of nearby genes. The identification
+  of the activation state of such regions helps to understand the gene
+  expression and to assess the impact of genetic variations on human
+  diseases (cite Li and Cappelletti).  Emploing machine learning
+  methods is a fundamental tool to the identification of the location
+  and activation status of these regions. Promising result and
+  state-of-the-art models are:
+  + DeepEnhancer (cite it) :: a deep learning model that identifies
+    CREs from sequence data;
+  + DECRES (cite it) :: a feed forward neural network able to predict
+    the activation state of enhancers and promoters given a specific
+    cell line.
+  + Bayesian optimization (cite it) :: the usage of
+    Bayesian optimization model selection creates high quality neural networks
+    with an efficient hyper-parameter search.
+    
+* Models
+  
+* Experimental setup
+
+* Considered task
+  
+* Dataset source
+  
+* Preprocessing
+
+* Data correlation and distribution
+
+* Feature selection
+
+* Data visualization
+
+* Holdouts
+
+* Result analysis
+
+* Results
+
