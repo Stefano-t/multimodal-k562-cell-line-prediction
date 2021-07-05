@@ -1,0 +1,81 @@
+* Compiti da eseguire per completare il progetto
+
+** DONE scaricare il dataset active-inactive promoters
+** DONE riscrivere i metodi per lavorare su entrambi i dataset
+** DONE vedere se sviluppare un modello di comparazione 
+  - il task è binario, quindi i modelli sono RandomForest o DecisionTree (oppure
+    altro se esiste).** TODO visualizzare anche il genome dataset 
+** TODO usare come iperparametri i valori nel paper 
+** TODO ottimizzare la feature selection
+  - comprendere come funziona ExtraTrees.
+  - vedere se conviene usare tale metodo.
+  - considerare se esiste un metodo adatto per questi task.
+** TODO vedere se usare un metodo di ricerca degli iperparametri
+  - potrebbe essere una grid search oppure una ricerca randomica.
+  - non dovrebbe essere necessaria questa aggiunta, perché la richiesta non lo
+    dice.
+** TODO effetturare il test di Wilcoxon per verificare i modelli
+
+* Appunti
+
+** Enhancher
+  La dimensione varia tra le 50 e 1500 coppie di basi.
+
+  Lo spazio di ricerca è estremamente grande, nell'ordine dei miliardi di basi
+  di DNA. Inoltre, la posizione non è fissa rispetto al gene target, e posso
+  anche saltare il gene più vicino oppure anche codificare per più geni.
+
+  Vengono seguenziati tramite il metodo *ChiP-seq*, indipendente dalla
+  conservazione del DNA.
+
+** Promoter
+  Dimensione di circa 100-1000 coppie di basi.
+
+  Sono posizionati vicino al sito di trascrizione. Possono codificare una
+  proteina oppure avere una funzione indipendete, come tRNA, mRNA, rRNA.
+
+** CNN
+  Lavorano bene con dati di dimensione fissa.
+
+  Alcuni iperparametri importanti sono:
+  + depth   :: numeri di neuroni di un layer che si connettono nella stessa
+               regione del layer precedente.
+  + stride  :: numero di unità con cui far muovere la convoluzione
+  + padding :: come riempire i bordi della regione di input in caso di stride
+               troppo grande.
+
+** Cell line K562
+  Linea cellulare di leucemia mieloide, ottenuta da una donna di 53 anni con
+  leucemia mieloide cronica in crisi blastica.
+
+** bigWig
+  Variante più efficiente di *wiggle* per rappresentare dati densi e continui
+  per poi essere raffigurati tramite grafo.
+
+** BED format
+  Metodo di definizioni delle data lines. Hanno tre campi obbligatori:
+  + chrom :: nome del cromosoma.
+  + chromStart :: posizione iniziale del cromosoma.
+  + chromEnd :: posizione finale del cromosoma (esclusa).
+** AUPRC
+   *Area under the precision-recall curve* is a measure to evaluate
+   the performance of a model in case of highly imbalanced data. It is
+   the area under the *precision-recall* curve. The baseline value if
+   the AUPRC is the fraction of positives examples divided by the
+   total number of examples. A model achieves perfect AUPRC when it
+   finds all the positive examples (perfect recall) without
+   accidentally marking any negative examples as positive (perfect
+   precision).
+** AUROC
+  *area under the receiver operating characteristic*: is thus a
+   performance metric for “discrimination”: it tells you about the
+   model’s ability to discriminate between cases (positive examples)
+   and non-cases (negative examples.) An AUROC of 0.8 means that the
+   model has good discriminatory ability: 80% of the time, the model
+   will correctly assign a higher absolute risk to a randomly selected
+   patient with an event than to a randomly selected patient without
+   an event. An AUROC of 0.5 is a useless model, because a random
+   classifier performs in the same way. The AUROC can be “excessively
+   optimistic” about the performance of models that are built for data
+   sets with a much larger number of negative examples than positive
+   examples.
