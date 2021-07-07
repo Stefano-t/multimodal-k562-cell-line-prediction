@@ -5,11 +5,14 @@
 ** DONE vedere se sviluppare un modello di comparazione 
   - il task è binario, quindi i modelli sono RandomForest o DecisionTree (oppure
     altro se esiste).** TODO visualizzare anche il genome dataset 
+** TODO scrivere il metodo della feature selection
+** TODO scrivere il main loop di allenamento
+** TODO cambiare il metodo di training del modello
+   è necessario permettere di allenare anche il baseline model: per
+   adesso, è possibile allenare solo tutte le NN.
 ** TODO usare come iperparametri i valori nel paper 
 ** TODO ottimizzare la feature selection
-  - comprendere come funziona ExtraTrees.
-  - vedere se conviene usare tale metodo.
-  - considerare se esiste un metodo adatto per questi task.
+   - controlla come funziona meglio RFE con SGD.
 ** TODO vedere se usare un metodo di ricerca degli iperparametri
   - potrebbe essere una grid search oppure una ricerca randomica.
   - non dovrebbe essere necessaria questa aggiunta, perché la richiesta non lo
