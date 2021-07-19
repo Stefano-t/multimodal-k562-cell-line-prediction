@@ -3,38 +3,59 @@
 #+DATE: \today
 
 #+LATEX_CLASS: article
-#+LATEX_CLASS_OPTIONS: [a4paper, twocolumn, 12pt]
+#+LATEX_CLASS_OPTIONS: [a4paper, 12pt]
 #+LATEX_HEADER:
 #+OPTIONS: toc:nil
 
 #+begin_abstract
-The objective of the project is the prediction of active regulatory
-regions in cell line K562 through the development of different kind of
-deep neural networks. The main focus of the project is not the
-overtaking of state-of-the-art network models, but how to correctly
-constraction of such models, the setup of the experimental environment
-and how to obtain statistically significant and reliable results.
+The objective of the project is the prediction of active regulatory regions in
+cell line K562 through the development of different kind of deep neural
+networks. The main focus of the project is not the overtaking of
+state-of-the-art network models, but how to correctly construct such models, the
+setup of the experimental environment and how to obtain statistically
+significant and reliable results.
 #+end_abstract
 
 * Introduction
-  In the human genome, 98% of DNA sequences are non-protein-coding
-  regions, DNA that does not encode protein sequences. A subset of
-  these non-coding regions are the cis-regulatory elements (CREs)
-  which regulate the trascription of nearby genes. The identification
-  of the activation state of such regions helps to understand the gene
-  expression and to assess the impact of genetic variations on human
-  diseases (cite Li and Cappelletti).  Emploing machine learning
-  methods is a fundamental tool to the identification of the location
-  and activation status of these regions. Promising result and
-  state-of-the-art models are:
-  + DeepEnhancer (cite it) :: a deep learning model that identifies
-    CREs from sequence data;
-  + DECRES (cite it) :: a feed forward neural network able to predict
-    the activation state of enhancers and promoters given a specific
-    cell line.
-  + Bayesian optimization (cite it) :: the usage of
-    Bayesian optimization model selection creates high quality neural networks
-    with an efficient hyper-parameter search.
+  All known organism generate their macromolecules, such as proteins, through
+  the gene expression process. During this process, the information stored in a
+  gene are synthesised in an end product, like protein or non-codind RNA. All
+  the steps in the gene expression may be regulated to increase or decrease the
+  production of specific gene products: this mechanism is called gene
+  regulation. In particular, the regulation may take place during the
+  transcription, the phase in which a segment of DNA is copied into RNA. During
+  the transcription, two important Cis-regulatory elements (CREs), a subset of
+  non-coding DNA, play fundamental roles: first of all, there is the promoter, a
+  sequence of DNA located near the transcription start site of a gene, and it's
+  responsable for the initiation of the transcription process; typically it can
+  be about 100-1000 base pair long, but this length vary from differnt organisms
+  and also from diffent genes. Then, there is the enhancer, which is also a
+  sequence of DNA which can be tied up by another protein to increase the
+  likelihood that transcription occurs; it's usually 50-1500 base pair long, but
+  they are locate far away from the start site, even 1 milion base pair
+  away. (cite all Wikipedia articles)
+
+  The identification of active regulatory region in non-coding DNA sequences is
+  an extremely important work because it allow us to forecast if a genetic
+  variant could be pathogenic or not: indeed, if a mutation happens in an
+  incative DNA region, then it is less likely to be potentially harmful. But if
+  a genetic variant is located in an active regulatory region, there are high
+  changes of serial severe human diseases.
+
+  Since 98% of our human genome is composed by non-coding DNA regions, the
+  prediction of active regulatory region is a complex task to be carried out by
+  humans. The empoling of artifical intelligence methods is nowdays essential to
+  identify the activation status and the location of these regions. Notable and
+  promising machine learning methods developed so far in this field are:
+  + DeepEnhancer, a convolutional neural network trained to distinguish
+    enhancers from background genomic sequences (cite
+    https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1878-3)
+  + DECRES, a deep learning model specifically created for the identification of
+    enhancer and promoter regions in the human genome (cite
+    https://doi.org/10.1186/s12859-018-2187-1).
+  + BiRen, a deep-learning-based hybrid architecture which predicts enhancers
+    using the DNA sequence alone. (cite
+    https://doi.org/10.1093/bioinformatics/btx105)
     
 * Models
   
@@ -58,3 +79,9 @@ and how to obtain statistically significant and reliable results.
 
 * Results
 
+* Bibliography
+  https://en.wikipedia.org/wiki/Regulatory_sequence
+  https://en.wikipedia.org/wiki/Regulation_of_gene_expression
+  https://en.wikipedia.org/wiki/Promoter_(genetics)
+  https://en.wikipedia.org/wiki/Transcription_(biology)
+  https://en.wikipedia.org/wiki/Cis-regulatory_element
