@@ -57,6 +57,12 @@ significant and reliable results.
     using the DNA sequence alone. (cite
     https://doi.org/10.1093/bioinformatics/btx105)
     
+  Given the complexity of such task, this project doens't aim to outperform
+  state-of-the-art models, but rather it focuses on how to correctly develop
+  differnt kind of neural network models from the ground up, starting from the
+  retrival of the epigenomic and sequence data to all the preprocessing steps
+  required to properly train the models.
+    
 * Models
   
 * Experimental setup
