@@ -33,7 +33,7 @@ significant and reliable results.
   sequence of DNA which can be tied up by another protein to increase the
   likelihood that transcription occurs; it's usually 50-1500 base pair long, but
   they are locate far away from the start site, even 1 milion base pair
-  away. (cite all Wikipedia articles)
+  away.\cite{regseq, geneexpr, promoters, enhancers, transcription, cis}
 
   The identification of active regulatory region in non-coding DNA sequences is
   an extremely important work because it allow us to forecast if a genetic
@@ -48,14 +48,11 @@ significant and reliable results.
   identify the activation status and the location of these regions. Notable and
   promising machine learning methods developed so far in this field are:
   + DeepEnhancer, a convolutional neural network trained to distinguish
-    enhancers from background genomic sequences (cite
-    https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1878-3)
+    enhancers from background genomic sequences. \cite{deepenhancer}
   + DECRES, a deep learning model specifically created for the identification of
-    enhancer and promoter regions in the human genome (cite
-    https://doi.org/10.1186/s12859-018-2187-1).
+    enhancer and promoter regions in the human genome. \cite{decres}
   + BiRen, a deep-learning-based hybrid architecture which predicts enhancers
-    using the DNA sequence alone. (cite
-    https://doi.org/10.1093/bioinformatics/btx105)
+    using the DNA sequence alone. \cite{biren}
     
   Given the complexity of such task, this project doens't aim to outperform
   state-of-the-art models, but rather it focuses on how to correctly develop
@@ -64,7 +61,63 @@ significant and reliable results.
   required to properly train the models.
     
 * Models
-  
+
+  Four different kinds of predictor have been developed, in particular one
+  ensamble method and the neural network:
+  1. A random forest classifier, with the following paramters:
+     - $100$ trees in the forest;
+     - each tree has a maximum depth of 5 nodes;
+     - the minimum number of samples that should be routed to a leaf node is set
+       to $100$;
+     - Gini function as split quality metric;
+     - weighted classes based on their frequencies in the subsamples;
+     These hyperparemter aren't meant to create an outperforming classifier, but
+     merely produce a simple and low footprint predictor to later compare more
+     complex models.
+  2. A feed-forward neural network with the following structure:
+     | Units | Activation function |
+     |-------+---------------------|
+     |   256 | ReLU                |
+     |   128 | ReLU                |
+     |    64 | ReLU                |
+     |     1 | Sigmoid             |
+
+     The structure of this model is the one proposed in \cite{fixedffnn}, in
+     particular the one with the optimize paramters given by the Bayesian
+     optimization. The weight adjustament function is a Stochastic Gradient
+     Descent technique, with learning rate equals to $0.1$ and batch size of
+     $1024$ samples.
+  3. A Convolutional Neural Network, built as follow:
+     | Type                 | Activation | Units | Kernel | Notes    |
+     |----------------------+------------+-------+--------+----------|
+     | Conv1D               | ReLU       |    64 | 5      | -        |
+     | Conv1d               | ReLU       |    32 | 4      | -        |
+     | MaxPooling           | -          |     - | -      | Size=2   |
+     | Conv1d               | ReLU       |    32 | 4      | -        |
+     | MaxPooling           | -          |     - | -      | Size=2   |
+     | GlobalAveragePooling | -          |     - | -      | -        |
+     | Dense                | ReLU       |    64 | -      | -        |
+     | Dropout              | -          |     - | -      | Rate=0.2 |
+     | Dense                | ReLU       |    32 | -      | -        |
+     | Dropout              | -          |     - | -      | Rate=0.2 |
+     | Dense                | Sigmoid    |     1 | -      | -        |
+     
+     The optimazing function is a Nadam procedure with learning rate equals to
+     $0.002$.
+  4. A Multi-Modal Neural Network, which allows to combine two differnt models
+     and with different input spaces into one single model. The two previous
+     neural networks are combined in the input layer, they compute in parallel
+     thoughout the hidden layers until they reach the last hidden layer, which
+     is concatenated to create a single hidden layer for the Multi-Modal model.
+     Then, the joint hidden layer is connected to a Dense layer with 64 units
+     and ReLU activation function, ending in a Dense layer with 1 unit and
+     Sigmoid activation function. This model can be constructed in two differnt
+     way: suppling the pre-trained neural networks, perfoming only the fine
+     tuning of the last hidden layer; or giving as input the shape of the input
+     data, creating the internal neural networks from scratch and then
+     concatenate them.  In both cases, a Nadam optimizing procedure is used to
+     tune the weights.
+
 * Experimental setup
 
 * Considered task
@@ -86,8 +139,60 @@ significant and reliable results.
 * Results
 
 * Bibliography
-  https://en.wikipedia.org/wiki/Regulatory_sequence
-  https://en.wikipedia.org/wiki/Regulation_of_gene_expression
-  https://en.wikipedia.org/wiki/Promoter_(genetics)
-  https://en.wikipedia.org/wiki/Transcription_(biology)
-  https://en.wikipedia.org/wiki/Cis-regulatory_element
+  \begin{thebibliography}{99}
+  \bibitem{regseq}
+    Wikipedia, the Free Encyclopedia,
+    Regulatory Sequence,
+    \texttt{https://en.wikipedia.org/wiki/Regulatory\_sequence},
+
+  \bibitem{geneexpr}
+    Wikipedia, the Free Encyclopedia,
+    Regulation of gene expression,
+    \texttt{https://en.wikipedia.org/wiki/Regulation\_of\_gene\_expression},
+    
+  \bibitem{promoters}
+    Wikipedia, the Free Encyclopedia,
+    Promoters,
+    \texttt{https://en.wikipedia.org/wiki/Promoter\_(genetics)},
+
+  \bibitem{enhancers}
+    Wikipedia, the Free Encyclopedia,
+    Cis-regulatory element,
+    \texttt{https://en.wikipedia.org/wiki/Enhancer\_(genetics)}
+
+  \bibitem{transcription}
+    Wikipedia, the Free Encyclopedia,
+    Transcription,
+    \texttt{https://en.wikipedia.org/wiki/Transcription\_(biology)},
+
+  \bibitem{cis}
+    Wikipedia, the Free Encyclopedia,
+    Cis-regulatory element,
+    \texttt{https://en.wikipedia.org/wiki/Cis-regulatory\_element}
+
+  \bibitem{deepenhancer}
+    Min, X., Zeng, W., Chen, S. et al. Predicting enhancers with deep
+    convolutional neural networks. BMC Bioinformatics 18, 478 (2017).
+    \texttt{https://doi.org/10.1186/s12859-017-1878-3}
+
+  \bibitem{decres}
+    Li, Y., Shi, W. \& Wasserman, W.W. Genome-wide prediction of cis-regulatory
+    regions using supervised deep learning methods. BMC Bioinformatics 19, 202
+    (2018).
+    \texttt{https://doi.org/10.1186/s12859-018-2187-1}
+
+  \bibitem{biren}
+    Bite Yang, Feng Liu, Chao Ren, Zhangyi Ouyang, Ziwei Xie, Xiaochen Bo,
+    Wenjie Shu, \\BiRen: predicting enhancers with a deep-learning-based model
+    using the DNA sequence alone, Bioinformatics, Volume 33, Issue 13, 1 July
+    2017, Pages 1930–1936,
+    \texttt{https://doi.org/10.1093/bioinformatics/btx105}
+
+  \bibitem{fixedffnn}
+  Luca Cappelletti, Alessandro Petrini, Jessica Gliozzo, Elena Casiraghi, Max
+  Schubach, Martin Kircher, and Giorgio Valentini. Bayesian optimization improves
+  tissue-specific prediction of active regulatory regions with deep neural
+  networks. In Springer, editor, Bioinformatics and Biomedical Engineering,
+  IWBBIO 2020, Lecture Notes in Computer Science, 2020.
+  \end{thebibliography}
+  
