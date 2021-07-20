@@ -118,14 +118,52 @@ significant and reliable results.
      concatenate them.  In both cases, a Nadam optimizing procedure is used to
      tune the weights.
 
-* Experimental setup
-
-* Considered task
+* Considered tasks
   
+  This work studies two different tasks: active enhancers vs inactive enhancers
+  (AEvsIE) and active promoters vs incative promoters (APvsIP) in the cell line
+  K562 from HG38 dataset. This means that the predictors should be trained in
+  order to identify which region of the non-coding DNA has an actual function of
+  promoter or enhancer, avoiding misclassifications.
+
+  The HG38 is the reference human genome released on December 2013, and its
+  function is to represent an example of how the set of genes are distributed in
+  the human beings \cite{genome}. Where the K562 cell line was derived from
+  leukemic cells obtained in December 1970 from a pleural effusion of a
+  53-year-old female suffering from chronic myelogenous leukemiafor about 4
+  years \cite{k562}.
 * Dataset source
+
+  Two differnt kinds of dataset are used to build the predictors.
+
+  The epigenomic datasets, for instance the enanchers and promoters, are
+  retrived thanks to the automated pipeline[fn:1] which downloads all the data from
+  ENCODE, a consortium providing a comprehensive parts list of functional
+  elements in the human genome, including elements that act at the protein and
+  RNA levels, and regulatory elements that control cells and circumstances in
+  which a gene is active \cite{encode}. After that, the regulatory elements are
+  linked to their activation status, retriving the labels from FANTOM, a
+  consortium which provides functional annotation for the mammalian genome
+  \cite{fantom}.
+  
+  The other dataset is directly the HG38 human genome assembly, retrived by
+  another automated pipeline[fn:2] which fetches and elaborates the information
+  directly from \cite{genome}.
   
 * Preprocessing
-
+  
+  The applied preprocessing steps are:
+  - binarization of the labels, because they are downloaded as boolean values,
+    and to perform some data visualization they are transformed into intger
+    values;
+  - imputation of missing values via the median strategy, a robust statistical indactor;
+  - scaling of the features through sklearn RobustScaler[fn:3], which removes
+    the median and scales the data according to the quantile range, making this
+    scaling robust to outliers.
+  These preprocessing steps are wrapped in a sklearn Pipeline[fn:4], allowing
+  an efficient and convient way to compute the statistic values only on the
+  training set, and the scales separately the test set, avoding any kind of data
+  leakage.
 * Data correlation and distribution
 
 * Feature selection
@@ -138,7 +176,9 @@ significant and reliable results.
 
 * Results
 
-* Bibliography
+
+* Bibliography 
+ 
   \begin{thebibliography}{99}
   \bibitem{regseq}
     Wikipedia, the Free Encyclopedia,
@@ -189,10 +229,36 @@ significant and reliable results.
     \texttt{https://doi.org/10.1093/bioinformatics/btx105}
 
   \bibitem{fixedffnn}
-  Luca Cappelletti, Alessandro Petrini, Jessica Gliozzo, Elena Casiraghi, Max
-  Schubach, Martin Kircher, and Giorgio Valentini. Bayesian optimization improves
-  tissue-specific prediction of active regulatory regions with deep neural
-  networks. In Springer, editor, Bioinformatics and Biomedical Engineering,
-  IWBBIO 2020, Lecture Notes in Computer Science, 2020.
+	Luca Cappelletti, Alessandro Petrini, Jessica Gliozzo, Elena Casiraghi, Max
+	Schubach, Martin Kircher, and Giorgio Valentini. Bayesian optimization
+	improves tissue-specific prediction of active regulatory regions with deep
+	neural networks. In Springer, editor, Bioinformatics and Biomedical
+	Engineering, IWBBIO 2020, Lecture Notes in Computer Science, 2020.
+
+  \bibitem{genome}
+    Kent WJ, Sugnet CW, Furey TS, Roskin KM, Pringle TH, Zahler AM, Haussler
+    D. The human genome browser at UCSC. Genome Res. 2002 Jun;12(6):996-1006.
+
+  \bibitem{k562}
+    Carmen B. Lozzio, Bismarck B. Lozzio, Human Chronic Myelogenous Leukemia
+    Cell-Line With Positive Philadelphia Chromosome, Blood, Volume 45, Issue 3,
+    1975, Pages 321-334, ISSN 0006-4971,
+    \texttt{https://doi.org/10.1182/blood.V45.3.321.321}.
+
+  \bibitem{encode}
+    The ENCODE Consortium, 2021, Stanford University,
+    \texttt{https://www.encodeproject.org/}
+
+  \bibitem{fantom}
+    FANTOM, 2014, RIKEN 
+    \texttt{https://fantom.gsc.riken.jp/}
   \end{thebibliography}
-  
+
+* Footnotes
+
+[fn:4] https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
+
+[fn:1] https://github.com/AnacletoLAB/epigenomic_dataset
+[fn:2] https://github.com/LucaCappelletti94/ucsc_genomes_downloader
+[fn:3] https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html
+
