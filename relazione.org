@@ -53,13 +53,13 @@ significant and reliable results.
     enhancer and promoter regions in the human genome. \cite{decres}
   + BiRen, a deep-learning-based hybrid architecture which predicts enhancers
     using the DNA sequence alone. \cite{biren}
-    
+
   Given the complexity of such task, this project doens't aim to outperform
   state-of-the-art models, but rather it focuses on how to correctly develop
   differnt kind of neural network models from the ground up, starting from the
   retrival of the epigenomic and sequence data to all the preprocessing steps
   required to properly train the models.
-    
+
 * Models
 
   Four different kinds of predictor have been developed, in particular one
@@ -101,7 +101,7 @@ significant and reliable results.
      | Dense                | ReLU       |    32 | -      | -        |
      | Dropout              | -          |     - | -      | Rate=0.2 |
      | Dense                | Sigmoid    |     1 | -      | -        |
-     
+
      The optimazing function is a Nadam procedure with learning rate equals to
      $0.002$.
   4. A Multi-Modal Neural Network, which allows to combine two differnt models
@@ -119,7 +119,7 @@ significant and reliable results.
      tune the weights.
 
 * Considered tasks
-  
+
   This work studies two different tasks: active enhancers vs inactive enhancers
   (AEvsIE) and active promoters vs incative promoters (APvsIP) in the cell line
   K562 from HG38 dataset. This means that the predictors should be trained in
@@ -145,13 +145,13 @@ significant and reliable results.
   linked to their activation status, retriving the labels from FANTOM, a
   consortium which provides functional annotation for the mammalian genome
   \cite{fantom}.
-  
+
   The other dataset is directly the HG38 human genome assembly, retrived by
   another automated pipeline[fn:2] which fetches and elaborates the information
   directly from \cite{genome}.
-  
+
 * Preprocessing
-  
+
   The applied preprocessing steps are:
   - binarization of the labels, because they are downloaded as boolean values,
     and to perform some data visualization they are transformed into intger
@@ -166,6 +166,33 @@ significant and reliable results.
   leakage.
 * Data correlation and distribution
 
+  The dataset of AEvsIE presents a strong class imbalance: indeed, only
+  $0.633\%$ of the samples leads to an active region. This situation doens't
+  appear in the APvsIP task, where $21.657\%$ of the sample are active
+  region. This situation is better visualized in figure [[fig:balance]].
+
+  #+caption: class balance for APvsIP (right) and AEvsIE (left) tasks
+  #+name: fig:balance
+  [[./img/class-balance.png]]
+
+  Note that a region is considered active when it has a TPM value at least of 1, while
+  it is labeled as inactive with values lower than 1.
+
+  Concerning the feature correlation, the Pearson correlation coefficient has
+  been computed between each feature: this is useful to identify any kind of
+  linear correlation between the features, in order to remove the ones with
+  higher correlation (0.95 threshold score, with p value equals to 0.01),
+  favoring the features with more entropy. Figures [[fig:promcorr]] [[fig:enhacorr]]
+  show the top 3 correlated features for both datasets.
+
+  #+caption: three most correlated features in APvsIP dataset
+  #+name: fig:promcorr
+  [[./img/promoters-feature-corr.png]]
+  #+caption: three most correlated features in AEvsIE dataset
+  #+name: fig:enhacorr
+  [[./img/enhancers-feature-corr.png]]
+
+
 * Feature selection
 
 * Data visualization
@@ -177,8 +204,8 @@ significant and reliable results.
 * Results
 
 
-* Bibliography 
- 
+* Bibliography
+
   \begin{thebibliography}{99}
   \bibitem{regseq}
     Wikipedia, the Free Encyclopedia,
@@ -189,7 +216,7 @@ significant and reliable results.
     Wikipedia, the Free Encyclopedia,
     Regulation of gene expression,
     \texttt{https://en.wikipedia.org/wiki/Regulation\_of\_gene\_expression},
-    
+
   \bibitem{promoters}
     Wikipedia, the Free Encyclopedia,
     Promoters,
@@ -229,11 +256,11 @@ significant and reliable results.
     \texttt{https://doi.org/10.1093/bioinformatics/btx105}
 
   \bibitem{fixedffnn}
-	Luca Cappelletti, Alessandro Petrini, Jessica Gliozzo, Elena Casiraghi, Max
-	Schubach, Martin Kircher, and Giorgio Valentini. Bayesian optimization
-	improves tissue-specific prediction of active regulatory regions with deep
-	neural networks. In Springer, editor, Bioinformatics and Biomedical
-	Engineering, IWBBIO 2020, Lecture Notes in Computer Science, 2020.
+    Luca Cappelletti, Alessandro Petrini, Jessica Gliozzo, Elena Casiraghi, Max
+    Schubach, Martin Kircher, and Giorgio Valentini. Bayesian optimization
+    improves tissue-specific prediction of active regulatory regions with deep
+    neural networks. In Springer, editor, Bioinformatics and Biomedical
+    Engineering, IWBBIO 2020, Lecture Notes in Computer Science, 2020.
 
   \bibitem{genome}
     Kent WJ, Sugnet CW, Furey TS, Roskin KM, Pringle TH, Zahler AM, Haussler
@@ -250,15 +277,14 @@ significant and reliable results.
     \texttt{https://www.encodeproject.org/}
 
   \bibitem{fantom}
-    FANTOM, 2014, RIKEN 
+    FANTOM, 2014, RIKEN
     \texttt{https://fantom.gsc.riken.jp/}
+
   \end{thebibliography}
 
 * Footnotes
 
-[fn:4] https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
-
 [fn:1] https://github.com/AnacletoLAB/epigenomic_dataset
 [fn:2] https://github.com/LucaCappelletti94/ucsc_genomes_downloader
 [fn:3] https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html
-
+[fn:4] https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
