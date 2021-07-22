@@ -192,6 +192,23 @@ significant and reliable results.
   #+name: fig:enhacorr
   [[./img/enhancers-feature-corr.png]]
 
+  It is also necessary to investigate which feature has no correlation with the
+  output: this can help to reduce the burden of useless feature in the
+  classification tasks. The study of this kind of correlation has been done
+  thanks to three differnt coefficients. First of all, the Pearson coefficient
+  helps to identify any linear relation between the single feature and the
+  output values; then, the Spearman correlation coefficient identifies monotonic
+  relations, both linear or not. Finally, the maximal information coefficient
+  (MIC) is computed only on the subset of variables discovered by the previuos
+  two metrics, in order to filter out any misleading classification, and also to
+  save some time. This phase leads to the identification of the following
+  features as non correlated with the output:
+  + promoters, THRAP3, NCOA4
+  + enhancers, H3K36me3, XRCC3, SRSF7, ZNF318, SNRNP70, ZNF830, THRA, SAFB2,
+    U2AF2, STAG1, RBM17, ZKSCAN3, NFE2L1, HNRNPH1, RBM34, ZNF408, FOXJ3, ILK,
+    ZNF280A, whole-genome shotgun bisulfite sequencing, ZNF778, DLX4, FOXA1,
+    MCM7, RBM15, PCBP2, ZBTB8A
+
 
 * Feature selection
 
