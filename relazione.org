@@ -175,8 +175,8 @@ significant and reliable results.
   #+name: fig:balance
   [[./img/class-balance.png]]
 
-  Note that a region is considered active when it has a TPM value at least of 1, while
-  it is labeled as inactive with values lower than 1.
+  Note that a region is considered active when it has a TPM value at least of 1,
+  while it is labeled as inactive with values lower than 1.
 
   Concerning the feature correlation, the Pearson correlation coefficient has
   been computed between each feature: this is useful to identify any kind of
