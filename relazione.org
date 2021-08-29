@@ -211,11 +211,31 @@ significant and reliable results.
 
 
 * Feature selection
+Taking inspiration from \cite{rfe}, even though the application field is
+slightly different from the one we are facing in this paper, the feature
+selection method applied is a Recursive Feature Elimination (RFE) with Support
+Vector Machine (SVM) as internal classifier. RFE is an iterative process of
+backward feature elimination, and works by taking an external classifier and
+training it on the dataset; then the features are ranked according to a ranking
+criterion, and finally the feature with the smallest rank are removed. RFE can
+work with a subset of feature greater than 1 at each step, removing more than
+one feature at each iteration. The process ends as soon as the required number
+of features is reached.
+As interal classifier, SVM is a linear classifier that creates an hyperplane or
+a set of hyperplanes in a higher dimensional space. It chooses the hyperplane
+that maximize the distance between the two classes, reducing the generalization
+error. SVM can be adapted to cope with nonlinear separable dataset, by choosing
+a kernel function to transform the feature space.
+
+In this work, the used implementations of these methods are taken from
+Sklean[fn:5][fn:6], where RFE is tuned by choosing 250 features as number of
+feature to select, and 10 features to remove at each iteration.  While SVM is
+created with a radial basis function as kernel, log loss as loss function and L1
+regularization.
 
 * Data visualization
 
 * Holdouts
-
 * Result analysis
 
 * Results
@@ -297,6 +317,13 @@ significant and reliable results.
     FANTOM, 2014, RIKEN
     \texttt{https://fantom.gsc.riken.jp/}
 
+  \bibitem{rfe}
+    Guyon, I., Weston, J., Barnhill, S. et al. Gene Selection for Cancer
+    Classification using Support Vector Machine.  Machine Learning 46, 389–422
+    (2002).
+    \texttt{https://doi.org/10.1023/A:1012487302797}
+
+ 
   \end{thebibliography}
 
 * Footnotes
@@ -305,3 +332,5 @@ significant and reliable results.
 [fn:2] https://github.com/LucaCappelletti94/ucsc_genomes_downloader
 [fn:3] https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html
 [fn:4] https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
+[fn:5] https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html
+[fn:6] https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
