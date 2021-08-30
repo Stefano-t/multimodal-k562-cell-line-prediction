@@ -28,7 +28,7 @@ significant and reliable results.
   non-coding DNA, play fundamental roles: first of all, there is the promoter, a
   sequence of DNA located near the transcription start site of a gene, and it's
   responsable for the initiation of the transcription process; typically it can
-  be about 100-1000 base pair long, but this length vary from differnt organisms
+  be about 100-1000 base pair long, but this length vary from different organisms
   and also from diffent genes. Then, there is the enhancer, which is also a
   sequence of DNA which can be tied up by another protein to increase the
   likelihood that transcription occurs; it's usually 50-1500 base pair long, but
@@ -56,7 +56,7 @@ significant and reliable results.
 
   Given the complexity of such task, this project doens't aim to outperform
   state-of-the-art models, but rather it focuses on how to correctly develop
-  differnt kind of neural network models from the ground up, starting from the
+  different kind of neural network models from the ground up, starting from the
   retrival of the epigenomic and sequence data to all the preprocessing steps
   required to properly train the models.
 
@@ -104,14 +104,14 @@ significant and reliable results.
 
      The optimazing function is a Nadam procedure with learning rate equals to
      $0.002$.
-  4. A Multi-Modal Neural Network, which allows to combine two differnt models
+  4. A Multi-Modal Neural Network, which allows to combine two different models
      and with different input spaces into one single model. The two previous
      neural networks are combined in the input layer, they compute in parallel
      thoughout the hidden layers until they reach the last hidden layer, which
      is concatenated to create a single hidden layer for the Multi-Modal model.
      Then, the joint hidden layer is connected to a Dense layer with 64 units
      and ReLU activation function, ending in a Dense layer with 1 unit and
-     Sigmoid activation function. This model can be constructed in two differnt
+     Sigmoid activation function. This model can be constructed in two different
      way: suppling the pre-trained neural networks, perfoming only the fine
      tuning of the last hidden layer; or giving as input the shape of the input
      data, creating the internal neural networks from scratch and then
@@ -134,7 +134,7 @@ significant and reliable results.
   years \cite{k562}.
 * Dataset source
 
-  Two differnt kinds of dataset are used to build the predictors.
+  Two different kinds of dataset are used to build the predictors.
 
   The epigenomic datasets, for instance the enanchers and promoters, are
   retrived thanks to the automated pipeline[fn:1] which downloads all the data from
@@ -195,7 +195,7 @@ significant and reliable results.
   It is also necessary to investigate which feature has no correlation with the
   output: this can help to reduce the burden of useless feature in the
   classification tasks. The study of this kind of correlation has been done
-  thanks to three differnt coefficients. First of all, the Pearson coefficient
+  thanks to three different coefficients. First of all, the Pearson coefficient
   helps to identify any linear relation between the single feature and the
   output values; then, the Spearman correlation coefficient identifies monotonic
   relations, both linear or not. Finally, the maximal information coefficient
@@ -203,43 +203,115 @@ significant and reliable results.
   two metrics, in order to filter out any misleading classification, and also to
   save some time. This phase leads to the identification of the following
   features as non correlated with the output:
-  + promoters, THRAP3, NCOA4
-  + enhancers, H3K36me3, XRCC3, SRSF7, ZNF318, SNRNP70, ZNF830, THRA, SAFB2,
+  + promoters: THRAP3, NCOA4
+  + enhancers: H3K36me3, XRCC3, SRSF7, ZNF318, SNRNP70, ZNF830, THRA, SAFB2,
     U2AF2, STAG1, RBM17, ZKSCAN3, NFE2L1, HNRNPH1, RBM34, ZNF408, FOXJ3, ILK,
     ZNF280A, whole-genome shotgun bisulfite sequencing, ZNF778, DLX4, FOXA1,
     MCM7, RBM15, PCBP2, ZBTB8A
 
-
 * Feature selection
-Taking inspiration from \cite{rfe}, even though the application field is
-slightly different from the one we are facing in this paper, the feature
-selection method applied is a Recursive Feature Elimination (RFE) with Support
-Vector Machine (SVM) as internal classifier. RFE is an iterative process of
-backward feature elimination, and works by taking an external classifier and
-training it on the dataset; then the features are ranked according to a ranking
-criterion, and finally the feature with the smallest rank are removed. RFE can
-work with a subset of feature greater than 1 at each step, removing more than
-one feature at each iteration. The process ends as soon as the required number
-of features is reached.
-As interal classifier, SVM is a linear classifier that creates an hyperplane or
-a set of hyperplanes in a higher dimensional space. It chooses the hyperplane
-that maximize the distance between the two classes, reducing the generalization
-error. SVM can be adapted to cope with nonlinear separable dataset, by choosing
-a kernel function to transform the feature space.
 
-In this work, the used implementations of these methods are taken from
-Sklean[fn:5][fn:6], where RFE is tuned by choosing 250 features as number of
-feature to select, and 10 features to remove at each iteration.  While SVM is
-created with a radial basis function as kernel, log loss as loss function and L1
-regularization.
+  Taking inspiration from \cite{rfe}, even though the application field is
+  slightly different from the one we are facing in this paper, the feature
+  selection method applied is a Recursive Feature Elimination (RFE) with Support
+  Vector Machine (SVM) as internal classifier. RFE is an iterative process of
+  backward feature elimination, and works by taking an external classifier and
+  training it on the dataset; then the features are ranked according to a
+  ranking criterion, and finally the feature with the smallest rank are
+  removed. RFE can work with a subset of feature greater than 1 at each step,
+  removing more than one feature at each iteration. The process ends as soon as
+  the required number of features is reached.  As interal classifier, SVM is a
+  linear classifier that creates an hyperplane or a set of hyperplanes in a
+  higher dimensional space. It chooses the hyperplane that maximize the distance
+  between the two classes, reducing the generalization error. SVM can be adapted
+  to cope with nonlinear separable dataset, by choosing a kernel function to
+  transform the feature space.
+
+  In this work, the used implementations of these methods are taken from
+  Sklean[fn:5][fn:6], where RFE is tuned by choosing 250 features as number of
+  feature to select, and 10 features to remove at each iteration.  While SVM is
+  created with a radial basis function as kernel, log loss as loss function and
+  L1 regularization.
 
 * Data visualization
 
+  In order to visualize the dataset, two different techniques of dimensionality
+  reduction have been used, since the dataset belongs to an high dimensional
+  space: the Principal Component Analysis (PCA) and t-Distributed Stochastic
+  Neighbor Embedding (t-SNE).
+
+  First, PCA computes the principal components, a set of uncorrelated variables
+  derived from the original variables of the data through orthogonal
+  transformation. The first component retains the highest variance of the original
+  dataset, while the subsequent compontes must be orthogonal to the previous one.
+  Since PCA is sensitive to the scale of the variables, it is necessary to scale
+  the features with respect to their standard deviation.
+
+  Then, t-SNE is a statistical nonlinear dimensionality reduction technique
+  well-suited for embedding high-dimensional data for visualization in a
+  low-dimensional space of two or three dimensions. Specifically, it models each
+  high-dimensional object by a two- or three-dimensional point in such a way that
+  similar objects are modeled by nearby points and dissimilar objects are modeled
+  by distant points with high probability. \cite{tsne}. Since the perplexity of
+  t-SNE procedure highly influnces the output of decomposition, it might be useful
+  to test different values of perplexity and inspect how the visualization
+  changes, obtaining more robust results.
+
+  Figures [[fig:pcadec]] and [[fig:tsnedec]] are obtained by using the Sklearn
+  implentation of PCA[fn:7] with 2 components to select, while t-SNE
+  implentation comes from Multicore t-SNE library[fn:8], with perplexity value
+  of 30, 40 and 50. Before computing the t-SNE, a preliminary decomposition of
+  the dataset to 50 components has been performed via PCA.
+
+  #+caption: PCA decomposition for promoters and enhancers.
+  #+name: fig:pcadec
+  [[./img/pca-dec.png]]
+
+  #+caption: t-SNE decomposition for promoters and enhancers with perplexity level of 30, 40 and 50 respectively.
+  #+name: fig:tsnedec
+  [[./img/tsne-dec.png]]
+
+  # TODO add images.
+  # TODO maybe comment the images?
 * Holdouts
+
+  The test size is about 20% of the original samples, and 10 different holdouts
+  are computed. Since the class imbalance must be taken into account, each train
+  and test set is created thanks to a stratified split of the dataset, where the
+  percentage of samples for each class is preserved in each fold[fn:9].
 * Result analysis
 
-* Results
+  The inspected metrics during the result analysis are accuracy, AUROC,
+  AUPRC. The accuracy is the number of correctly predicted observations divided
+  by the total number of samples. AUROC (area under the receiver operating
+  characteristic) misures the discrimination capability of the model, and is
+  calculated as the area under the ROC curve, a plot of the true positive rate
+  against the false positive rate. The closer the metric is to 1, the better
+  will be the discriminating power of the model. An AUROC value of 0.5
+  corresponds to a random classifier, and so the model is completly
+  useless. Since auroc may lead to overly optimistic results in the case where
+  the class of negative examples is much larger than the class of positive
+  examples, it is necessary to exploit another metric. AUPRC (area under the
+  precision-recall curve) is well-suited performance metric when dealing with
+  imbalanced data. Unlike AUROC, which has a baseline value of 0.5, AUPRC
+  baseline value is the fraction of positive examples over the total number of
+  examples. This means that AUPRC is problem dependent.
 
+  In order to compare the different models according to the previous metrics, a
+  Wilcoxon signed-rank test is performed. It is a non parametric statistical
+  test used to compare two different data samples, assuming that they derive
+  from the same population, they are randomly and indipendently generated and
+  they are ordinal. As null hypothesis it assumes that the difference between
+  pairs as a symmetric shape around zero. When the null hypothesis is rejected,
+  one of the two models is statistically better than the other; otherwise, they
+  are statistically indistinguishable.
+
+  The tests performed are the comparison between the same model trained with and
+  without feature selection, and the comparison between the effectiveness of the
+  models on the dataset without feature selection.
+
+  The implementation of the Wilcoxon test is the one provided by Scipy[fn:10].
+* Results
 
 * Bibliography
 
@@ -323,14 +395,22 @@ regularization.
     (2002).
     \texttt{https://doi.org/10.1023/A:1012487302797}
 
- 
+  \bibitem{tsne}
+    Wikipedia, the Free Encyclopedia,
+    t-distributed stochastic neighbor embedding,
+    \texttt{https://en.wikipedia.org/wiki/T-distributed\_stochastic\_neighbor\_embedding}
+
   \end{thebibliography}
 
 * Footnotes
 
+[fn:10] https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wilcoxon.html
 [fn:1] https://github.com/AnacletoLAB/epigenomic_dataset
 [fn:2] https://github.com/LucaCappelletti94/ucsc_genomes_downloader
 [fn:3] https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html
 [fn:4] https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
 [fn:5] https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html
 [fn:6] https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
+[fn:7] https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html
+[fn:8] https://github.com/DmitryUlyanov/Multicore-TSNE
+[fn:9] https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedShuffleSplit.html
