@@ -167,7 +167,7 @@ significant and reliable results.
 * Data correlation and distribution
 
   The dataset of AEvsIE presents a strong class imbalance: indeed, only
-  $0.633\%$ of the samples leads to an active region. This situation doens't
+  $0.873\%$ of the samples leads to an active region. This situation doens't
   appear in the APvsIP task, where $21.657\%$ of the sample are active
   region. This situation is better visualized in figure [[fig:balance]].
 
@@ -176,7 +176,8 @@ significant and reliable results.
   [[./img/class-balance.png]]
 
   Note that a region is considered active when it has a TPM value at least of 1,
-  while it is labeled as inactive with values lower than 1.
+  while it is labeled as inactive with values lower than 1 for APvsIP task, while
+  these thresholds are set to 0 for AEvsIE task.
 
   Concerning the feature correlation, the Pearson correlation coefficient has
   been computed between each feature: this is useful to identify any kind of
@@ -271,7 +272,6 @@ significant and reliable results.
   #+name: fig:tsnedec
   [[./img/tsne-dec.png]]
 
-  # TODO add images.
   # TODO maybe comment the images?
 * Holdouts
 
@@ -308,13 +308,66 @@ significant and reliable results.
 
   The tests performed are the comparison between the same model trained with and
   without feature selection, and the comparison between the effectiveness of the
-  models on the dataset without feature selection.
+  models on the dataset without feature selection. In both cases, the
+  significance level is set to 0.01.
 
   The implementation of the Wilcoxon test is the one provided by Scipy[fn:10].
 * Results
 
-* Bibliography
+  The barplots in figures [[fig:performancewithout]] and [[fig:performancewith]]
+  show the training and test performance of the models when trained with and
+  without feature selection for both promoters and enhancers tasks.
 
+  #+caption: Performance of the models without feature selection
+  #+name: fig:performancewithout
+  [[./img/performance-without-fs.png]]
+
+  #+caption: Performance of the models with feature selection
+  #+name: fig:performancewith
+  [[./img/performance-with-fs.png]]
+
+
+  At first glance, we can draw several conclusions:
+  
++ for both tasks, the perfomance of the models with and without feature
+  selection are practically the same. Indeed, running the Wilcoxon test for the
+  same model when the feature selection is performed or not gives the same
+  results, except for the random forest that leads to better results without
+  feature selection in the enhancer task without feature selection.
+
++ the Multi Modal Neural Network trained from scratch and the one created with
+  pre-trained models show similar performance. This happens in both tasks, and
+  the results show off a clear overfitting of the models: the values of the
+  metrics are better during the training phase than during the test phase,
+  especially for the enhancer task and for the AUPRC metric. The Wilcoxon test
+  proves that the two versions of the Multi Modal Neural Network are
+  statistically indistinguishable.
+
++ the CNN is the worst model amongst the others. It shows a clear underfitting,
+  meaning that the depth of the network is not the correct one, and it is not
+  capable of extracting relevant information from the dataset.
+
++ The Feed-Forward Neural Network is the most powerful model and it seems quite
+  robust. Wilcoxon test confims that it outperforms all the other models in
+  both tasks.
+
++ All the models perform better in the promoters task instead of the enhancers,
+  meaning that predicting the activation status of enanchers is harder than
+  predicting the activation status of promoters.
+
+* Further improvements
+
+  There are several improvements that can been done to further investigate the
+  performance of the models:
+
++ changing the number of features to select during the recursive feature
+  elimination procedure;
++ changing the number of features to remove at each step during the recursive
+  feature elimination procedure;
++ increasing the depth of the CNN and/or changing the holdout rate;
++ trying differnt values of TPM thresholds.
+
+# BIBLIOGRAPHY
   \begin{thebibliography}{99}
   \bibitem{regseq}
     Wikipedia, the Free Encyclopedia,
