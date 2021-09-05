@@ -1,4 +1,4 @@
-#+TITLE: Report of bioninformatic project
+#+TITLE: Report of bioinformatic project
 #+AUTHOR: Stefano Taverni @@latex:\\@@ stefano.taverni@studenti.unimi.it
 #+DATE: \today
 
